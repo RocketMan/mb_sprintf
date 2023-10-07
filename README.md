@@ -1,4 +1,4 @@
-# mb_sprintf
+# polyfill-mb_sprintf
 
 This provides polyfills for the `mb_sprintf` and `mb_vsprintf` functions.
 

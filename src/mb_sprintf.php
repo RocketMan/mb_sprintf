@@ -10,12 +10,6 @@
 namespace Rocketman\Polyfill;
 
 final class mb_sprintf {
-  public static function mb_sprintf($format) {
-      $argv = func_get_args() ;
-      array_shift($argv) ;
-      return mb_vsprintf($format, $argv) ;
-  }
-  
   /**
    * Works with all encodings in format and arguments.
    * Supported: Sign, padding, alignment, width and precision.

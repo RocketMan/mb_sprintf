@@ -1,0 +1,17 @@
+{
+    "name": "rocketman/polyfill-mb_sprintf",
+    "description": "Polyfill for the mb_sprintf and mb_vsprintf functions",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Viktor Söderqvist",
+            "email": "viktor@textalk.se"
+        }
+    ],
+    "type": "library",
+    "autoload": {
+        "classmap": [
+            "src/mb_sprintf.php"
+        ]
+    }
+}

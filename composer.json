@@ -10,8 +10,7 @@
     ],
     "type": "library",
     "autoload": {
-        "classmap": [
-            "src/mb_sprintf.php"
-        ]
+        "psr-4": { "Rocketman\\Polyfill\\": "src/" },
+	"files": [ "bootstrap.php" ]
     }
 }

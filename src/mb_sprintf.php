@@ -6,20 +6,22 @@
  *
  * upstream source: https://www.php.net/manual/en/function.sprintf.php#89020
  */
-if (!function_exists('mb_sprintf')) {
-  function mb_sprintf($format) {
+
+namespace Rocketman\Polyfill;
+
+final class mb_sprintf {
+  public static function mb_sprintf($format) {
       $argv = func_get_args() ;
       array_shift($argv) ;
       return mb_vsprintf($format, $argv) ;
   }
-}
-if (!function_exists('mb_vsprintf')) {
+  
   /**
    * Works with all encodings in format and arguments.
    * Supported: Sign, padding, alignment, width and precision.
    * Not supported: Argument swapping.
    */
-  function mb_vsprintf($format, $argv, $encoding=null) {
+  public static function mb_vsprintf($format, $argv, $encoding=null) {
       if (is_null($encoding))
           $encoding = mb_internal_encoding();
 

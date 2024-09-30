@@ -37,7 +37,7 @@ final class mb_sprintf {
         
         if ($type == '') {
           // didn't match. do nothing. this is the last iteration.
-          $newargv = array_merge($newargv, array_values($args));
+          $newargv = array_merge($newargv, array_values($argv));
           break;
         }
         elseif ($type === '%') {

@@ -29,7 +29,7 @@ final class mb_sprintf {
       
         // Split the format in two parts: $pre and $post by the first %-directive
         // We get also the matched groups
-        list ($pre, $sign, $filler, $align, $size, $precision, $type, $post) =
+        @list ($pre, $sign, $filler, $align, $size, $precision, $type, $post) =
             preg_split("!\%(\+?)('.|[0 ]|)(-?)([1-9][0-9]*|)(\.[1-9][0-9]*|)([%a-zA-Z])!u",
                        $format, 2, PREG_SPLIT_DELIM_CAPTURE) ;
 
@@ -37,12 +37,14 @@ final class mb_sprintf {
         
         if ($type == '') {
           // didn't match. do nothing. this is the last iteration.
+          $newargv = array_merge($newargv, array_values($args));
+          break;
         }
-        elseif ($type == '%') {
+        elseif ($type === '%') {
           // an escaped %
-          $newformat .= '%%';
+          $newformat .= mb_convert_encoding('%%', $encoding, 'UTF-8');
         }
-        elseif ($type == 's') {
+        elseif ($type === 's') {
           $arg = array_shift($argv);
           $arg = mb_convert_encoding($arg, 'UTF-8', $encoding);
           $padding_pre = '';
@@ -52,7 +54,7 @@ final class mb_sprintf {
           if ($precision !== '') {
             $precision = intval(substr($precision,1));
             if ($precision > 0 && mb_strlen($arg,$encoding) > $precision)
-              $arg = mb_substr($precision,0,$precision,$encoding);
+              $arg = mb_substr($arg,0,$precision,$encoding);
           }
           
           // define padding
@@ -69,17 +71,15 @@ final class mb_sprintf {
           }
           
           // escape % and pass it forward
-          $newformat .= $padding_pre . str_replace('%', '%%', $arg) . $padding_post;
+          $newformat .= mb_convert_encoding($padding_pre . str_replace('%', '%%', $arg) . $padding_post, $encoding, 'UTF-8');
         }
         else {
           // another type, pass forward
-          $newformat .= "%$sign$filler$align$size$precision$type";
+          $newformat .= mb_convert_encoding("%$sign$filler$align$size$precision$type", $encoding, 'UTF-8');
           $newargv[] = array_shift($argv);
         }
         $format = strval($post);
       }
-      // Convert new format back from UTF-8 to the original encoding
-      $newformat = mb_convert_encoding($newformat, $encoding, 'UTF-8');
       return vsprintf($newformat, $newargv);
   }
 }

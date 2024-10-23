@@ -45,7 +45,7 @@ final class mb_sprintf {
           $newformat .= mb_convert_encoding('%%', $encoding, 'UTF-8');
         }
         elseif ($type === 's') {
-          $arg = array_shift($argv);
+          $arg = (string) array_shift($argv);
           $arg = mb_convert_encoding($arg, 'UTF-8', $encoding);
           $padding_pre = '';
           $padding_post = '';
